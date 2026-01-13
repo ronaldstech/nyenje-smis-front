@@ -229,7 +229,7 @@ function SubjectTeachers({ readOnly = false }) {
                                     <TableCell>
                                         <Stack direction="row" alignItems="center" spacing={2}>
                                             {!isMobile && (<Avatar
-                                                src={row.picture ? (row.picture.startsWith('http') ? row.picture : `https://unimarket-mw.com/nyenje-api/api/images/${row.picture}`) : `https://ui-avatars.com/api/?name=${row.username || 'User'}`}
+                                                src={`/images/profile.jpg`}
                                                 alt={row.username}
                                                 sx={{
                                                     width: 40, height: 40,

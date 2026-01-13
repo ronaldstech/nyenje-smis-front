@@ -395,7 +395,7 @@ function Workload() {
                                             <TableCell>
                                                 <Stack direction="row" spacing={1.5} alignItems="center">
                                                     <Avatar
-                                                        src={row.picture ? (row.picture.startsWith('http') ? row.picture : `https://unimarket-mw.com/nyenje-api/api/images/${row.picture}`) : `https://ui-avatars.com/api/?name=${row.teacherName || 'User'}`}
+                                                        src={`/images/profile.jpg`}
                                                         sx={{
                                                             width: 32, height: 32, fontSize: '0.8rem', fontWeight: 700,
                                                             bgcolor: '#6366f1', color: '#fff'

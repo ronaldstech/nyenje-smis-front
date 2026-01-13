@@ -87,7 +87,8 @@ function MainLayout({ children, menus }) {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            background: 'linear-gradient(180deg, #ffffff 0%, #f8faff 100%)'
+            background: 'linear-gradient(180deg, #ffffff 0%, #f8faff 100%)',
+            overflowY: 'auto'
         }}>
             {/* Profile Header Section */}
             <Box sx={{
@@ -190,7 +191,7 @@ function MainLayout({ children, menus }) {
             </Box>
 
             {/* Menu Items Section */}
-            <Box sx={{ flexGrow: 1, padding: '20px 12px', overflowY: 'auto' }}>
+            <Box sx={{ flexGrow: 1, padding: '20px 12px' }}>
                 <List disablePadding>
                     {currentMenus.map((menu, index) => {
                         const isActive = activeMenu === menu.title;

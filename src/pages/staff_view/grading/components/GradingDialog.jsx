@@ -176,7 +176,7 @@ const GradingDialog = ({
                                 boxShadow: '0 10px 40px rgba(0,0,0,0.05)'
                             }}
                         >
-                            <TableContainer sx={{ maxHeight: 'calc(100vh - 160px)', overflowX: { xs: 'auto', md: 'hidden' } }}>
+                            <TableContainer sx={{ maxHeight: 'calc(100vh - 160px)', overflowX: 'auto' }}>
                                 <Table stickyHeader>
                                     <TableHead>
                                         <TableRow>
