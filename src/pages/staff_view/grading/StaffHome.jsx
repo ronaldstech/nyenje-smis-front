@@ -20,7 +20,7 @@ import { AppContext } from '../../../context/AppContext';
 import SubjectTable from './components/SubjectTable';
 import GradingDialog from './components/GradingDialog';
 
-const API_URL = "https://unimarket-mw.com/smis-api/api/index.php";
+const API_URL = "https://unimarket-mw.com/nyenje-api/api/index.php";
 
 function StaffHome() {
     const theme = useTheme();

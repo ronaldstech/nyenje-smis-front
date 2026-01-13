@@ -84,13 +84,10 @@ export default function Profile() {
                         }}>
                             <Box sx={{ position: 'relative' }}>
                                 <Avatar
-                                    src={user?.picture ? (user.picture.startsWith('http') ? user.picture : `https://unimarket-mw.com/nyenje-api/api/images/${user.picture}`) : `https://ui-avatars.com/api/?name=${user?.username || 'User'}`}
-                                    sx={{
-                                        width: 160, height: 160,
-                                        border: '6px solid #fff',
-                                        boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
-                                    }}
+                                    src={`/images/profile.jpg`}
+                                    sx={{ width: 150, height: 150 }}
                                 />
+
                                 <Tooltip title="Change Photo">
                                     <IconButton size="small" sx={{
                                         position: 'absolute', bottom: 10, right: 10,

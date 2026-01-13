@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 export const AppContext = createContext({});
-const API_URL = "https://unimarket-mw.com/smis-api/api/index.php";
+const API_URL = "https://unimarket-mw.com/nyenje-api/api/index.php";
 
 export const AppProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(() => {
@@ -16,7 +16,7 @@ export const AppProvider = ({ children }) => {
             id: 0,
             username: "user",
             email: "user@gmail.com",
-            picture: "pro_file.png",
+            picture: "", // Empty to trigger fallback
             role: "",
             phone: "",
             district_data: { name: "" }

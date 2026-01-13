@@ -104,7 +104,7 @@ const StatCard = ({ title, value, icon, color, loading, trend, onClick }) => (
     </Paper>
 );
 
-const API_URL = "https://unimarket-mw.com/smis-api/api/index.php";
+const API_URL = "https://unimarket-mw.com/nyenje-api/api/index.php";
 
 function StaffDashboard() {
     const { user, academic } = useContext(AppContext);

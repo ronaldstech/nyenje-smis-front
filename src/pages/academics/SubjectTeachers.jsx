@@ -229,6 +229,8 @@ function SubjectTeachers({ readOnly = false }) {
                                     <TableCell>
                                         <Stack direction="row" alignItems="center" spacing={2}>
                                             {!isMobile && (<Avatar
+                                                src={row.picture ? (row.picture.startsWith('http') ? row.picture : `https://unimarket-mw.com/nyenje-api/api/images/${row.picture}`) : `https://ui-avatars.com/api/?name=${row.username || 'User'}`}
+                                                alt={row.username}
                                                 sx={{
                                                     width: 40, height: 40,
                                                     bgcolor: '#f1f5f9', color: '#6366f1',
@@ -236,9 +238,7 @@ function SubjectTeachers({ readOnly = false }) {
                                                     border: '2px solid #fff',
                                                     boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
                                                 }}
-                                            >
-                                                {row.username.charAt(0)}
-                                            </Avatar>)}
+                                            />)}
                                             <Box>
                                                 <Typography variant="body2" sx={{ fontWeight: 700, color: '#1e293b' }}>
                                                     {row.username}

@@ -242,7 +242,7 @@ function Workload() {
 
                 {/* Summary Stats */}
                 <Grid container spacing={3} sx={{ mb: 4 }}>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <StatCard
                             title="Total Classes"
                             count={loading ? <Skeleton width={40} /> : stats.totalAssignments}
@@ -251,7 +251,7 @@ function Workload() {
                             subtitle="Total active allocations"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <StatCard
                             title="Active Teachers"
                             count={loading ? <Skeleton width={40} /> : stats.activeTeachers}
@@ -260,7 +260,7 @@ function Workload() {
                             subtitle="Teaching this session"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <StatCard
                             title="School Progress"
                             count={loading ? <Skeleton width={60} /> : `${stats.avgProgress}%`}
@@ -269,7 +269,7 @@ function Workload() {
                             subtitle="Average grading completion"
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
+                    <Grid item xs={12} sm={6} md={6} lg={3}>
                         <StatCard
                             title="Completed"
                             count={loading ? <Skeleton width={40} /> : stats.completedAssignments}
@@ -282,7 +282,7 @@ function Workload() {
 
                 {/* Search and Filters */}
                 <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
+                    direction={{ xs: 'column', md: 'row' }}
                     spacing={2}
                     sx={{ mb: 3 }}
                 >
@@ -394,10 +394,13 @@ function Workload() {
                                         <TableRow key={idx} hover sx={{ transition: 'background-color 0.2s' }}>
                                             <TableCell>
                                                 <Stack direction="row" spacing={1.5} alignItems="center">
-                                                    <Avatar sx={{
-                                                        width: 32, height: 32, fontSize: '0.8rem', fontWeight: 700,
-                                                        bgcolor: '#6366f1', color: '#fff'
-                                                    }}>
+                                                    <Avatar
+                                                        src={row.picture ? (row.picture.startsWith('http') ? row.picture : `https://unimarket-mw.com/nyenje-api/api/images/${row.picture}`) : `https://ui-avatars.com/api/?name=${row.teacherName || 'User'}`}
+                                                        sx={{
+                                                            width: 32, height: 32, fontSize: '0.8rem', fontWeight: 700,
+                                                            bgcolor: '#6366f1', color: '#fff'
+                                                        }}
+                                                    >
                                                         {row.teacherName.charAt(0)}
                                                     </Avatar>
                                                     <Typography sx={{ fontWeight: 700, color: '#1e293b', fontSize: 14 }}>

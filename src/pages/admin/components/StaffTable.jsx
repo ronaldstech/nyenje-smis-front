@@ -160,8 +160,7 @@ const StaffTable = ({
                                     {!isMobile && (
                                         <TableCell>
                                             <Avatar
-                                                src={row.picture ? (row.picture.startsWith('http') ? row.picture : `https://unimarket-mw.com/nyenje-api/api/images/${row.picture}`) : `https://ui-avatars.com/api/?name=${row.username || 'User'}`}
-                                                alt={row.username}
+                                                src={`/images/profile.jpg`}
                                                 sx={{ width: 36, height: 36 }}
                                             />
                                         </TableCell>

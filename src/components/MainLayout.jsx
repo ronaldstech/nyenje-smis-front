@@ -14,7 +14,8 @@ import {
     Toolbar,
     IconButton,
     Box,
-    Avatar
+    Avatar,
+    Stack
 } from '@mui/material';
 import {
     Home as HomeIcon,
@@ -40,12 +41,9 @@ function MainLayout({ children, menus }) {
         setMobileOpen(!mobileOpen);
     };
 
-    // We can infer the "stage" or active menu from the location path
     const getActiveMenu = () => {
         const path = location.pathname;
         if (path === '/' || path === '/portal/staff') return 'Dashboard';
-
-        // Check specifics first
         if (path.includes('/my-classes')) return 'My Classes';
         if (path.includes('/students')) return 'Students';
         if (path.includes('/academics')) return 'Academics';
@@ -53,11 +51,7 @@ function MainLayout({ children, menus }) {
         if (path.includes('/profile')) return 'Profile';
         if (path.includes('/workload')) return 'Workload';
         if (path.startsWith('/settings')) return 'Settings';
-
-        // Last check for Staff (catches /staff and /portal/staff/staff)
-        // Since we already filtered exact /portal/staff above, this is safe for /portal/staff/staff
         if (path.includes('/staff')) return 'Staff';
-
         return 'Dashboard';
     };
 
@@ -89,127 +83,114 @@ function MainLayout({ children, menus }) {
     };
 
     const drawerContent = (
-        <div style={{
+        <Box sx={{
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            background: 'linear-gradient(180deg, #ffffff 0%, #f8faff 100%)' // Soft background tint
+            background: 'linear-gradient(180deg, #ffffff 0%, #f8faff 100%)'
         }}>
             {/* Profile Header Section */}
-            <div className="w3-padding-large w3-center" style={{
+            <Box sx={{
                 position: 'relative',
-                paddingBottom: '24px',
+                padding: '32px 16px 24px',
                 borderBottom: '1px solid rgba(0,0,0,0.05)',
-                background: 'linear-gradient(to bottom, rgba(102, 126, 234, 0.05), transparent)'
+                background: 'linear-gradient(to bottom, rgba(102, 126, 234, 0.05), transparent)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center'
             }}>
-                <div style={{ position: 'relative', display: 'inline-block' }}>
+                <Box sx={{ position: 'relative', display: 'inline-block', mb: 2 }}>
                     <Avatar
-                        src={user?.picture ? (user.picture.startsWith('http') ? user.picture : `https://unimarket-mw.com/nyenje-api/api/images/${user.picture}`) : `https://ui-avatars.com/api/?name=${user?.username || 'User'}`}
-                        sx={{
-                            width: "105px",
-                            height: "105px",
-                            border: "4px solid white",
-                            boxShadow: "0 10px 20px rgba(0,0,0,0.1)"
-                        }}
+                        src={`/images/profile.jpg`}
+                        sx={{ width: 105, height: 105 }}
                     />
-                    {/* Online Status Dot */}
-                    <div style={{
+
+                    <Box sx={{
                         position: 'absolute',
                         bottom: 5,
                         right: 5,
                         width: 14,
                         height: 14,
-                        backgroundColor: '#4caf50',
+                        backgroundColor: '#10b981',
                         border: '2.5px solid white',
-                        borderRadius: '50%'
+                        borderRadius: '50%',
+                        zIndex: 2
                     }} />
-                </div>
+                </Box>
 
-                <Typography variant="h6" sx={{ mt: 1.5, fontWeight: 800, color: '#2d3748', letterSpacing: '-0.5px' }}>
+                <Typography variant="h6" sx={{ fontWeight: 800, color: '#2d3748', letterSpacing: '-0.5px', mb: 1 }}>
                     {user?.username || 'User'}
                 </Typography>
 
-                <Box sx={{ mt: 1, display: 'flex', gap: 1, justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <div style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(255, 117, 140, 0.1)',
-                        padding: '2px 12px',
+                <Stack spacing={1} sx={{ width: '100%', alignItems: 'center' }}>
+                    <Box sx={{
+                        px: 1.5, py: 0.25,
                         borderRadius: '20px',
+                        bgcolor: 'rgba(99, 102, 241, 0.1)',
+                        border: '1px solid rgba(99, 102, 241, 0.1)'
                     }}>
-                        <Typography variant="caption" sx={{ color: '#ff758c', fontWeight: 700, fontSize: '0.7rem', textTransform: 'uppercase' }}>
-                            Academic Year: {academic.name}
+                        <Typography variant="caption" sx={{ fontWeight: 800, color: '#6366f1', textTransform: 'uppercase', fontSize: '0.65rem' }}>
+                            {user?.role || 'Staff'}
                         </Typography>
-                    </div>
-
-                    <div style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        padding: '2px 12px',
+                    </Box>
+                    <Box sx={{
+                        px: 1.5, py: 0.25,
                         borderRadius: '20px',
+                        bgcolor: 'rgba(255, 117, 140, 0.1)',
+                        border: '1px solid rgba(255, 117, 140, 0.1)'
                     }}>
-                        <Typography variant="caption" sx={{ color: '#6366f1', fontWeight: 700, fontSize: '0.7rem', textTransform: 'uppercase' }}>
-                            Role: {user?.role || 'Privileged'}
+                        <Typography variant="caption" sx={{ color: '#ff758c', fontWeight: 800, fontSize: '0.65rem', textTransform: 'uppercase' }}>
+                            {academic.name}
                         </Typography>
-                    </div>
-                </Box>
+                    </Box>
+                </Stack>
 
                 {/* School Type Switcher */}
-                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ mt: 3, width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <Box sx={{
                         display: 'inline-flex',
                         bgcolor: 'rgba(226, 232, 240, 0.5)',
                         borderRadius: '12px',
                         p: 0.5,
-                        width: '85%'
+                        border: '1px solid #e2e8f0'
                     }}>
                         <Box
                             onClick={() => toggleSchoolType('day')}
                             sx={{
-                                flex: 1,
-                                py: 1,
+                                px: 2, py: 0.75,
+                                borderRadius: '8px',
                                 cursor: 'pointer',
-                                textAlign: 'center',
-                                borderRadius: '10px',
-                                transition: 'all 0.3s ease',
+                                transition: 'all 0.2s',
                                 bgcolor: schoolType === 'day' ? '#fff' : 'transparent',
                                 color: schoolType === 'day' ? '#6366f1' : '#64748b',
-                                boxShadow: schoolType === 'day' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none',
-                                '&:hover': { bgcolor: schoolType === 'day' ? '#fff' : 'rgba(255,255,255,0.3)' }
+                                boxShadow: schoolType === 'day' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
+                                '&:hover': { color: '#6366f1' }
                             }}
                         >
-                            <Typography variant="caption" sx={{ fontWeight: 800, fontSize: '0.7rem' }}>
-                                DAY
-                            </Typography>
+                            <Typography variant="caption" sx={{ fontWeight: 800, fontSize: '0.7rem' }}>DAY</Typography>
                         </Box>
                         <Box
                             onClick={() => toggleSchoolType('open')}
                             sx={{
-                                flex: 1,
-                                py: 1,
+                                px: 2, py: 0.75,
+                                borderRadius: '8px',
                                 cursor: 'pointer',
-                                textAlign: 'center',
-                                borderRadius: '10px',
-                                transition: 'all 0.3s ease',
+                                transition: 'all 0.2s',
                                 bgcolor: schoolType === 'open' ? '#fff' : 'transparent',
                                 color: schoolType === 'open' ? '#6366f1' : '#64748b',
-                                boxShadow: schoolType === 'open' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none',
-                                '&:hover': { bgcolor: schoolType === 'open' ? '#fff' : 'rgba(255,255,255,0.3)' }
+                                boxShadow: schoolType === 'open' ? '0 2px 4px rgba(0,0,0,0.05)' : 'none',
+                                '&:hover': { color: '#6366f1' }
                             }}
                         >
-                            <Typography variant="caption" sx={{ fontWeight: 800, fontSize: '0.7rem' }}>
-                                OPEN
-                            </Typography>
+                            <Typography variant="caption" sx={{ fontWeight: 800, fontSize: '0.7rem' }}>OPEN</Typography>
                         </Box>
                     </Box>
                 </Box>
-
-
-            </div>
+            </Box>
 
             {/* Menu Items Section */}
-            <div style={{ flexGrow: 1, padding: '20px 12px', overflowY: 'auto' }}>
+            <Box sx={{ flexGrow: 1, padding: '20px 12px', overflowY: 'auto' }}>
                 <List disablePadding>
                     {currentMenus.map((menu, index) => {
                         const isActive = activeMenu === menu.title;
@@ -233,7 +214,6 @@ function MainLayout({ children, menus }) {
                                                 : "rgba(102, 126, 234, 0.08)",
                                             transform: isActive ? "scale(1.02)" : "translateX(4px)"
                                         },
-                                        // Active side indicator
                                         "&::before": {
                                             content: '""',
                                             position: 'absolute',
@@ -254,7 +234,6 @@ function MainLayout({ children, menus }) {
                                     }}>
                                         {menu.icon}
                                     </ListItemIcon>
-
                                     <ListItemText
                                         primary={menu.title}
                                         primaryTypographyProps={{
@@ -268,23 +247,18 @@ function MainLayout({ children, menus }) {
                         );
                     })}
                 </List>
-            </div>
+            </Box>
 
             {/* Footer Section */}
-            <div className="w3-padding w3-center" style={{ borderTop: '1px solid rgba(0,0,0,0.03)' }}>
+            <Box sx={{ p: 2, textAlign: 'center', borderTop: '1px solid rgba(0,0,0,0.03)' }}>
                 <Typography
                     variant="caption"
-                    sx={{
-                        color: 'text.disabled',
-                        fontWeight: 600,
-                        letterSpacing: '1px',
-                        opacity: 0.7
-                    }}
+                    sx={{ color: 'text.disabled', fontWeight: 600, letterSpacing: '1px', opacity: 0.7 }}
                 >
-                    v1.2.0 • NKK-SEC
+                    v1.2.0 • nyenje-cdss
                 </Typography>
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 
     return (
@@ -370,9 +344,9 @@ function MainLayout({ children, menus }) {
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p: { xs: 0, md: 2 }, // No padding on mobile
+                    p: { xs: 0, md: 2 },
                     width: { md: `calc(100% - 280px)` },
-                    mt: { xs: 7, md: 0 }, // Add margin top on mobile for AppBar
+                    mt: { xs: 7, md: 0 },
                     height: '100vh',
                     overflowY: 'auto'
                 }}
@@ -381,7 +355,7 @@ function MainLayout({ children, menus }) {
                     className="glass-card"
                     sx={{
                         minHeight: '100%',
-                        p: { xs: 1, md: 2.5 } // Minimal padding on mobile
+                        p: { xs: 1, md: 2.5 }
                     }}
                 >
                     {children}
