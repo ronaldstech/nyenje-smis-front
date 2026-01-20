@@ -37,9 +37,7 @@ function StaffHome() {
     const [studentLoading, setStudentLoading] = useState(false);
 
     // Derived State
-    const gradedCount = rows.filter(r =>
-        (schoolType === 'open' ? false : r.assessment !== "") || r.end_term !== ""
-    ).length;
+    const gradedCount = rows.filter(r => r.end_term !== "").length;
 
     const progress = rows.length > 0 ? Math.round((gradedCount / rows.length) * 100) : 0;
 
@@ -72,9 +70,7 @@ function StaffHome() {
                     const studentData = await studentRes.json();
                     const students = Array.isArray(studentData) ? studentData : [];
 
-                    const gradedCount = students.filter(r =>
-                        (schoolType === 'open' ? false : r.mark?.assessments) || r.mark?.end_term
-                    ).length;
+                    const gradedCount = students.filter(r => r.mark?.end_term).length;
                     const totalStudents = students.length || 1; // avoid division by 0
                     const progress = Math.round((gradedCount / totalStudents) * 100);
 
@@ -126,7 +122,6 @@ function StaffHome() {
             const normalized = Array.isArray(data)
                 ? data.map(r => ({
                     ...r,
-                    assessment: r.mark ? r.mark.assessments : "",
                     end_term: r.mark ? r.mark.end_term : ""
                 }))
                 : [];
@@ -146,7 +141,8 @@ function StaffHome() {
             print_marks: "true",
             form: form,
             academic_id: aca_id,
-            subject_id: subId
+            subject_id: subId,
+            school_type: schoolType
         });
         const url = `${API_URL}?${params.toString()}`;
         window.open(url, "_blank").focus();
@@ -181,35 +177,6 @@ function StaffHome() {
         }
     };
 
-    const updateAssessment = async (id, subject, form, academic_id, value) => {
-        if (value === "" || value === null || value === undefined) return;
-        if (value > 100 || value < 0) {
-            Toastify({ text: "Mark must be between 0 and 100", backgroundColor: "#f59e0b" }).showToast();
-            return;
-        }
-
-        try {
-            const body = new URLSearchParams({
-                updateAssessment: "true", id, subject, form, academic_id, value,
-                school_type: schoolType
-            });
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                body: body,
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            });
-            const res = await response.json();
-            if (res.status) {
-                Toastify({ text: res.message, backgroundColor: "#10b981", duration: 1000 }).showToast();
-            } else {
-                Toastify({ text: res.message, backgroundColor: "#ef4444" }).showToast();
-            }
-        } catch (error) {
-            console.error("Error updating assessment:", error);
-            Toastify({ text: "Update failed", backgroundColor: "#ef4444" }).showToast();
-        }
-    };
-
     const deleteMarkRow = async (id, subject, form, academic_id) => {
         if (!window.confirm("Are you sure you want to delete ALL marks for this student record? This cannot be undone.")) return;
 
@@ -226,8 +193,8 @@ function StaffHome() {
             const res = await response.json();
             if (res.status) {
                 Toastify({ text: res.message, backgroundColor: "#64748b", duration: 1500 }).showToast();
-                // Clear both fields locally
-                setRows(prev => prev.map(row => row.id === id ? { ...row, assessment: "", end_term: "" } : row));
+                // Clear end_term locally
+                setRows(prev => prev.map(row => row.id === id ? { ...row, end_term: "" } : row));
             } else {
                 Toastify({ text: res.message, backgroundColor: "#ef4444" }).showToast();
             }
@@ -300,7 +267,6 @@ function StaffHome() {
                     isMobile={isMobile}
                     schoolType={schoolType}
                     onUpdateMark={updateMark}
-                    onUpdateAssessment={updateAssessment}
                     onDeleteMarkRow={deleteMarkRow}
                     onLocalUpdate={handleLocalRowUpdate}
                 />
