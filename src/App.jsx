@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Analytics } from '@vercel/analytics/react';
 import { AppProvider } from './context/AppContext';
 import MainLayout from './components/MainLayout';
 import Dashboard from './pages/Dashboard';
@@ -214,6 +215,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <AppProvider>
         <Router>
+          <Analytics />
           <Routes>
             <Route path="/login" element={<Login />} />
 
